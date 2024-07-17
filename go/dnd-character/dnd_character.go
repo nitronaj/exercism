@@ -22,21 +22,10 @@ func Modifier(score int) int {
 
 // Ability uses randomness to generate the score for an ability
 func Ability() int {
-	dices := make([]int, 0, 4)
-	sum, minIndex := 0, 0
-
-	for i := 0; i < 4; i++ {
-		roll := rand.Intn(6) + 1
-		dices = append(dices, roll)
-		if dices[i] < dices[minIndex] {
-			minIndex = i
-		}
-		sum += roll
-	}
-
-	sum -= dices[minIndex]
-
-	return sum
+	// dices should be between
+	// min  3 => 1, 1, 1, 1
+	// max 18 => 6, 6, 6, 6
+	return rand.Intn(15) + 3
 }
 
 // GenerateCharacter creates a new Character with random scores for abilities
