@@ -13,14 +13,5 @@ func Square(number int) (uint64, error) {
 }
 
 func Total() uint64 {
-	var sum uint64
-	boardSquares := 64
-	for i := 1; i <= boardSquares; i++ {
-		grains, err := Square(i)
-		if err != nil {
-			return 0
-		}
-		sum += grains
-	}
-	return sum
+	return 1<<64 - 1
 }
