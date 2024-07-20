@@ -1,29 +1,28 @@
 package isbn
 
-import (
-	"unicode"
-)
+func IsDigit(char rune) (int, bool) {
+	if char < '0' || char > '9' {
+		return 0, false
+	}
+
+	return int(char - '0'), true
+}
 
 func IsValidISBN(isbn string) bool {
 	sum := 0
-	multiply := 10
-	countDigits := 0
-	for _, char := range isbn {
-		if unicode.IsDigit(char) {
-			sum += int(char-'0') * multiply
-			multiply -= 1
-			countDigits += 1
-		}
+	pos := 10
 
-		if unicode.IsLetter(char) {
-			if char == 'X' {
-				sum += 10
-				countDigits += 1
-			} else {
-				return false
-			}
+	for _, char := range isbn {
+		if digit, ok := IsDigit(char); ok {
+			sum += digit * pos
+			pos -= 1
+		} else if pos == 1 && char == 'X' {
+			sum += 10
+			pos -= 1
+		} else if char != '-' {
+			return false
 		}
 	}
 
-	return countDigits == 10 && sum%11 == 0
+	return pos == 0 && sum%11 == 0
 }
